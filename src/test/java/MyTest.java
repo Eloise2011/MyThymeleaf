@@ -24,7 +24,7 @@ public class MyTest {
     public void test2() {
         //1. 创建模版引擎
         TemplateEngine te = new TemplateEngine();
-        //2. 读取磁盘钟的模版文件
+        //2. 读取磁盘中的模版文件
         ClassLoaderTemplateResolver ctr = new ClassLoaderTemplateResolver();
         //3.设定引擎使用的解析器
         te.setTemplateResolver(ctr);
@@ -35,6 +35,25 @@ public class MyTest {
         String out = te.process("main.html", context);
         //6. 输出结果
         System.out.println("out = " + out);
+    }
+
+    @Test
+    public void test3() {
+        //1.创建模板引擎
+        TemplateEngine templateEngine = new TemplateEngine();
+        //2. 创建模板解析器
+        ClassLoaderTemplateResolver classLoaderTemplateResolver = new ClassLoaderTemplateResolver();
+        //3.模板解析器前后缀配置
+        classLoaderTemplateResolver.setPrefix("templates/");
+        classLoaderTemplateResolver.setSuffix(".html");
+        //4. 设置模板引擎的模板解析器， 可以注释掉这行看看程序运行结果的差异
+        templateEngine.setTemplateResolver(classLoaderTemplateResolver);
+        //5. 创建上下文
+        Context context = new Context();
+        //6. 对上下文变量进行填充
+        context.setVariable("name", "Eloise");
+        String out = templateEngine.process("hello", context);
+        System.out.println(out);
     }
 
 }
